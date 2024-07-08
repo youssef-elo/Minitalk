@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:20:50 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2024/07/05 14:19:17 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2024/07/06 10:27:52 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	signal_handler(int sig, struct __siginfo *siginfo, void *p)
 	static int	c;
 	static int	o_pid;
 
-	if ((o_pid != 0 && siginfo->si_pid != o_pid) || o_pid == 0)
+	if ((o_pid != 0 && siginfo->si_pid != o_pid))
 	{
 		i = 0;
 		c = 0;
