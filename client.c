@@ -6,12 +6,11 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:10:47 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2024/07/06 13:26:33 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2024/07/09 23:31:36 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 int	ft_isdigit(int c)
 {

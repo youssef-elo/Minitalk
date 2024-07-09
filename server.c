@@ -6,14 +6,11 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:20:50 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2024/07/06 10:27:52 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2024/07/09 23:34:35 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-
-int	g_b[8] = {1, 2, 4, 8, 16, 32, 64, 128};
+#include "minitalk.h"
 
 void	ft_putchar(char c)
 {
@@ -44,6 +41,7 @@ void	signal_handler(int sig, struct __siginfo *siginfo, void *p)
 	static int	i;
 	static int	c;
 	static int	o_pid;
+	static int	bin[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 
 	if ((o_pid != 0 && siginfo->si_pid != o_pid))
 	{
@@ -52,7 +50,7 @@ void	signal_handler(int sig, struct __siginfo *siginfo, void *p)
 	}
 	o_pid = siginfo->si_pid;
 	if (sig == SIGUSR2)
-		c += g_b[i];
+		c += bin[i];
 	i++;
 	if (i == 8)
 	{

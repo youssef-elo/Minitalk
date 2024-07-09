@@ -6,21 +6,11 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:10:47 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2024/07/06 16:34:57 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2024/07/09 23:30:09 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-
-int length = 0;
-
-int	ft_isdigit(int c)
-{
-	if (c <= '9' && c >= '0')
-		return (1);
-	return (0);
-}
+#include "minitalk_bonus.h"
 
 int	ft_atoi(char *str)
 {
@@ -37,7 +27,7 @@ int	ft_atoi(char *str)
 		if (str[i++] == '-')
 			sign *= -1;
 	}
-	while (ft_isdigit(str[i]) == 1)
+	while (str[i] <= '9' && str[i] >= '0')
 	{
 		check = r * 10 + (str[i] - 48);
 		if (check < r)
@@ -86,7 +76,7 @@ int	check_pid(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (str[i] >= '9' || str[i] <= '0')
 			return (1);
 		i++;
 	}
@@ -95,19 +85,15 @@ int	check_pid(char *str)
 
 void	signal_handler(int signal)
 {
-	static int i = 0;
-
-	i++;
-	if (i == length && signal == SIGUSR1)
-		write(1, "message sent!\n",14);
+	if (signal == SIGUSR1)
+		write(1, "message sent!\n", 14);
 }
-
 
 int	main(int argc, char **argv)
 {
-	int	pid;
-	int	i;
-	struct sigaction siga;
+	int					pid;
+	int					i;
+	struct sigaction	siga;
 
 	i = 0;
 	if (argc != 3)
@@ -117,17 +103,14 @@ int	main(int argc, char **argv)
 	pid = ft_atoi(argv[1]);
 	if (pid < 0)
 		return (1);
-	siga.__sigaction_u.__sa_handler = &signal_handler; 
+	siga.__sigaction_u.__sa_handler = &signal_handler;
 	sigemptyset(&siga.sa_mask);
 	siga.sa_flags = SA_RESTART;
 	sigaction(SIGUSR1, &siga, NULL);
-	while(argv[2][length])
-		length++;
 	while (argv[2][i])
 	{
 		if (!send_char(argv[2][i], pid))
 			return (1);
-		write(1, &argv[2][i], 1);
 		i++;
 	}
 	send_char(0, pid);
