@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:10:47 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2024/07/10 19:30:48 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:17:47 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,21 @@ int	ft_atoi(char *str)
 	long	r;
 	long	check;
 
-	i = 0;
-	sign = 1;
-	r = 0;
-	if (str[i] == '-' || str[i] == '+')
-	{
+	(1) && (i = 0, sign = 1, r = 0);
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 		if (str[i++] == '-')
-			sign *= -1;
-	}
+			return (-1);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		check = r * 10 + (str[i] - 48);
-		if (check < r)
+		if (check > 2147483647)
 			return (-1);
 		r *= 10;
 		r += (str[i] - 48);
 		i++;
 	}
-	if (r < -2147483648 || r > 2147483647)
-		return (-1);
 	return ((int)r * sign);
 }
 
@@ -52,13 +48,13 @@ int	send_char(char c, int pid)
 		{
 			if (kill(pid, SIGUSR2) == -1)
 				return (0);
-			usleep(400);
+			usleep(500);
 		}
 		else
 		{
 			if (kill(pid, SIGUSR1) == -1)
 				return (0);
-			usleep(400);
+			usleep(500);
 		}
 		i++;
 	}
@@ -70,15 +66,20 @@ int	check_pid(char *str)
 	int	i;
 
 	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
 	if (str[i] == '-')
-		return (0);
+		return (1);
 	if (str[i] == '+')
 		i++;
+	if (!str[i])
+		return (1);
 	while (str[i])
 	{
-		if (str[i] >= '9' || str[i] <= '0')
+		if ((str[i] >= '0' && str[i] <= '9'))
+			i++;
+		else
 			return (1);
-		i++;
 	}
 	return (0);
 }
@@ -86,7 +87,7 @@ int	check_pid(char *str)
 void	signal_handler(int signal)
 {
 	if (signal == SIGUSR1)
-		write(1, "message sent!\n", 14);
+		write(1, "Message sent!\n", 14);
 }
 
 int	main(int argc, char **argv)
@@ -101,7 +102,7 @@ int	main(int argc, char **argv)
 	if (check_pid(argv[1]))
 		return (1);
 	pid = ft_atoi(argv[1]);
-	if (pid < 0)
+	if (pid <= 1)
 		return (1);
 	siga.__sigaction_u.__sa_handler = &signal_handler;
 	sigemptyset(&siga.sa_mask);
