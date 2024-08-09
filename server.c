@@ -6,7 +6,7 @@
 /*   By: yel-ouaz <yel-ouaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 20:20:50 by yel-ouaz          #+#    #+#             */
-/*   Updated: 2024/07/20 22:17:07 by yel-ouaz         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:33:39 by yel-ouaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ int	main(void)
 	sigemptyset(&siga.sa_mask);
 	siga.sa_flags = SA_SIGINFO | SA_RESTART;
 	siga.__sigaction_u.__sa_sigaction = &signal_handler;
-	sigaction(SIGUSR2, &siga, NULL);
-	sigaction(SIGUSR1, &siga, NULL);
+	if (sigaction(SIGUSR2, &siga, NULL) == -1)
+		return (1);
+	if (sigaction(SIGUSR1, &siga, NULL) == -1)
+		return (1);
 	while (1)
 		pause();
 }
