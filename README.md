@@ -12,9 +12,13 @@ A client that sends messages to the server via signals.
 A custom binary protocol for encoding/decoding messages.
 
 Key Concepts Demonstrated:
+
 ✔️ Signal handling (signal() or sigaction())
+
 ✔️ Bitwise operations for data encoding
+
 ✔️ Process synchronization
+
 ✔️ Error handling and robustness
 
 # 🎯 Features
