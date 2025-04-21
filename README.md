@@ -1,4 +1,4 @@
-Minitalk 📡
+# Minitalk 📡
 A client-server communication program using UNIX signals
 42 School Project | Low-level system programming with C
 
